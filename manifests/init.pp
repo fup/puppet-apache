@@ -11,7 +11,7 @@
 # Requires:
 #
 # Sample Usage:
-#
+#   
 class apache {
   include apache::params
   package { 'httpd': 

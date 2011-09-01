@@ -1,3 +1,16 @@
+# Class: 
+#
+# Description
+#
+# Parameters:
+#   
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+
 # Class: apache::dev
 #
 # This class installs Apache development libraries
