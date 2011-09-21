@@ -34,7 +34,12 @@ class apache {
    'expires' : ensure => present;
   }
   
-  
+  file { $apache::params::vhost:
+    ensure  => file,
+    content => "include ${apache::params::vdir}/*.conf",
+    require => Package['httpd'],
+  }
+
   file { $apache::params::vdir:
     ensure  => directory,
     recurse => true,

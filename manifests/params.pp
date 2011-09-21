@@ -27,13 +27,20 @@ class apache::params {
        $php_package = 'php'
        $ssl_package = 'mod_ssl'
        $apache_dev  = 'httpd-devel'
-       $vdir = '/etc/httpd/conf.d/'
+       $vhost = '/etc/httpd/conf.d/vhosts.conf'
+       $vdir = '/etc/httpd/sites-enabled'
+       $passenger_package = ['mod_passenger', 'ruby', 'ruby-irb', 'ruby-rdoc',
+                             'rubygem-daemon_controller', 'rubygem-fastthread', 
+                             'rubygem-passenger', 'rubygem-passenger-native', 
+                             'rubygem-passenger-native-libs', 'rubygem-rack',
+                             'rubygem-rake', 'rubygems']
     }
     'ubuntu', 'debian': {
        $apache_name = 'apache2'
        $php_package = 'libapache2-mod-php5'
        $ssl_package = 'apache-ssl'
        $apache_dev  = [ 'libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev' ]
+       $vhost = '/etc/apache2/conf.d/vhosts.conf'
        $vdir = '/etc/apache2/sites-enabled/'
     }
     default: {
@@ -41,6 +48,7 @@ class apache::params {
        $php_package = 'libapache2-mod-php5'
        $ssl_package = 'apache-ssl'
        $apache_dev  = 'apache-dev'
+       $vhost = '/etc/apache2/conf.d/vhosts.conf'
        $vdir = '/etc/apache2/sites-enabled/'
     }
   }
