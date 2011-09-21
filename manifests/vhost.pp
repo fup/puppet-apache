@@ -31,10 +31,13 @@ define apache::vhost( $port, $docroot, $ssl=true, $template='apache/vhost-defaul
 
   include apache
 
-  if $passenger == 'true' {
-    include apache::passenger
-    $REAL_template = 'apache/vhost-passenger-default.conf.erb'
-  } else { $REAL_template = $template }
+  if $passenger == 'true' { 
+    include apache::passenger 
+    if $template == 'apache/vhost-default.conf.erb' {
+      $REAL_template = 'apache/vhost-passenger-default.conf.erb'
+    } else { $REAL_template = $template }
+  } 
+  else { $REAL_template = $template }
 
   file {"${apache::params::vdir}/${priority}-${name}.conf":
     content => template($REAL_template),
