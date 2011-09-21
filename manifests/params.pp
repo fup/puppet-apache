@@ -29,11 +29,10 @@ class apache::params {
        $apache_dev  = 'httpd-devel'
        $vhost = '/etc/httpd/conf.d/vhosts.conf'
        $vdir = '/etc/httpd/sites-enabled'
-       $passenger_package = ['mod_passenger', 'ruby', 'ruby-irb', 'ruby-rdoc',
+       $passenger_package = ['mod_passenger', 'rubygem-rake', 'rubygem-rack',
                              'rubygem-daemon_controller', 'rubygem-fastthread', 
                              'rubygem-passenger', 'rubygem-passenger-native', 
-                             'rubygem-passenger-native-libs', 'rubygem-rack',
-                             'rubygem-rake', 'rubygems']
+                             'rubygem-passenger-native-libs']
     }
     'ubuntu', 'debian': {
        $apache_name = 'apache2'

@@ -17,7 +17,7 @@
 class apache::passenger {
 
   include apache::params
-
+  include ruby
   @package { $apache::params::passenger_package:
     ensure => present,
     tag    => 'passenger-package',
