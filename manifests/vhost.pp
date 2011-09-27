@@ -30,6 +30,7 @@
 define apache::vhost( $port, $docroot, $ssl=true, $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '', $passenger = 'false' ) {
 
   include apache
+  include apache::ssl
 
   if $passenger == 'true' { 
     include apache::passenger 
