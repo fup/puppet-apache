@@ -10,6 +10,7 @@
 # - The $priority of the site
 # - The $serveraliases of the site
 # - Whether Phusion $passenger is used for this vhost or not (true|false)
+# - Whether apache should be notified of a service $restart or not
 #
 # Actions:
 # - Install Apache Virtual Hosts
@@ -27,10 +28,13 @@
 #    docroot   => '/path/to/docroot',
 #    passenger => 'true',
 #  }
-define apache::vhost( $port, $docroot, $ssl=true, $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '', $passenger = 'false' ) {
+define apache::vhost( $port, $docroot, $ssl='true', $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '', $passenger = 'false', $restart = 'true' ) {
 
   include apache
-  include apache::ssl
+
+  if $ssl == 'true' {
+    include apache::ssl
+  }
 
   if $passenger == 'true' { 
     include apache::passenger 
@@ -46,6 +50,13 @@ define apache::vhost( $port, $docroot, $ssl=true, $template='apache/vhost-defaul
     group => 'root',
     mode => '777',
     require => Package['httpd'],
-    notify => Service['httpd'],
+    before => $restart ? {
+      'false' => Service['httpd'],
+      default => undef,
+    },
+    notify => $restart ? {
+      'false' => undef,
+      default => Service['httpd'],
+    },
   }
 }
