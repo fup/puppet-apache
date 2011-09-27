@@ -28,16 +28,21 @@
 #    docroot   => '/path/to/docroot',
 #    passenger => 'true',
 #  }
-define apache::vhost( $port, $docroot, $ssl='true', $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '', $passenger = 'false', $restart = 'true' ) {
+define apache::vhost( $port, $docroot, $ssl='true', $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '', $passenger = 'false' ) {
 
   include apache
 
   if $ssl == 'true' {
-    include apache::ssl
+    class { 'apache::ssl':
+      before => File["${apache::params::vdir}/${priority}-${name}.conf"],
+    }
   }
 
   if $passenger == 'true' { 
-    include apache::passenger 
+    class { 'apache::passenger':
+      before => File["${apache::params::vdir}/${priority}-${name}.conf"],
+    }
+
     if $template == 'apache/vhost-default.conf.erb' {
       $REAL_template = 'apache/vhost-passenger-default.conf.erb'
     } else { $REAL_template = $template }
@@ -50,13 +55,6 @@ define apache::vhost( $port, $docroot, $ssl='true', $template='apache/vhost-defa
     group => 'root',
     mode => '777',
     require => Package['httpd'],
-    before => $restart ? {
-      'false' => Service['httpd'],
-      default => undef,
-    },
-    notify => $restart ? {
-      'false' => undef,
-      default => Service['httpd'],
-    },
+    notify => Service['httpd'],
   }
 }
