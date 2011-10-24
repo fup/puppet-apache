@@ -28,7 +28,7 @@
 #    docroot   => '/path/to/docroot',
 #    passenger => 'true',
 #  }
-define apache::vhost( $port, $docroot, $ssl='true', $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '', $passenger = 'false' ) {
+define apache::vhost( $port, $docroot, $ssl='true', $template='apache/vhost-default.conf.erb', $priority, $serveraliases = '', $passenger = 'false', $rvm='' ) {
 
   include apache
 
@@ -40,6 +40,7 @@ define apache::vhost( $port, $docroot, $ssl='true', $template='apache/vhost-defa
 
   if $passenger == 'true' { 
     class { 'apache::passenger':
+      rvm    => $rvm,
       before => File["${apache::params::vdir}/${priority}-${name}.conf"],
     }
 

@@ -29,6 +29,7 @@ class apache::params {
        $apache_dev  = 'httpd-devel'
        $vhost = '/etc/httpd/conf.d/vhosts.conf'
        $vdir = '/etc/httpd/sites-enabled'
+       $passenger_conf = '/etc/httpd/conf.d/passenger.conf'
        $passenger_package = ['mod_passenger', 'rubygem-rake', 'rubygem-rack',
                              'rubygem-daemon_controller', 'rubygem-fastthread', 
                              'rubygem-passenger', 'rubygem-passenger-native', 
