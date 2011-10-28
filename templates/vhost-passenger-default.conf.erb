@@ -3,7 +3,6 @@
 # Managed by Puppet
 # ************************************
 
-NameVirtualHost *:<%= port %>
 <VirtualHost *:<%= port %>>
   ServerName <%= name %>
 <%if serveraliases.is_a? Array -%>
@@ -11,8 +10,9 @@ NameVirtualHost *:<%= port %>
 <% elsif serveraliases != '' -%>
 <%= "  ServerAlias #{serveraliases}" -%>
 <% end -%>
-  DocumentRoot <%= docroot %>
-  <Directory <%= docroot %>>
+  RackEnv <%= rack_env %>
+  DocumentRoot <%= docroot %>/public
+  <Directory <%= docroot %>/public>
     allow from all
     Options -MultiViews
   </Directory>
