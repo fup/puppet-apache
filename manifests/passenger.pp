@@ -6,7 +6,7 @@
 # - $passenger_package
 #
 # Actions:
-#   - Install Apache PHP package
+#   - Install and configure mod_passenger package
 #
 # Requires:
 #   Phusion Passenger Packages for your OS
