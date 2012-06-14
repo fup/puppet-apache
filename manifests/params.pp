@@ -20,9 +20,10 @@ class apache::params {
 
   $user  = 'www-data'
   $group = 'www-data'
-  
+
   case $operatingsystem {
     'centos', 'redhat', 'fedora': {
+       $rvm_path = '/usr/lib/rvm'
        $apache_name = 'httpd'
        $php_package = 'php'
        $ssl_package = 'mod_ssl'
