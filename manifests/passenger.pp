@@ -18,6 +18,10 @@ class apache::passenger($ruby_version='',$passenger_version) {
   include apache::params
   include ruby
 
+  Exec {
+    path    => '/usr/lib/rvm/bin:/bin:/sbin:/usr/bin:/usr/sbin',
+  }
+
   if $rvm != '' {
     #  create the mod_passenger.so for the version of ruby installed by rvm
     include rvm
@@ -35,8 +39,9 @@ class apache::passenger($ruby_version='',$passenger_version) {
     }
 
     exec {'passenger_install':
-      command => "${rvm_path}/gems/${ruby_version}/bin/passenger-install-apache2-module -a",
+      command => "rvm exec ${rvm_path}/gems/${ruby_version}/bin/passenger-install-apache2-module -a",
       creates => "${rvm_path}/gems/${ruby_version}/gems/passenger-${passenger_version}/ext/apache2/mod_passenger.so",
+      require => Rvm::Define::Gem['passenger'],
     }
 
     $passenger_so   = "${rvm_path}/gems/${ruby_version}/gems/passenger-${passenger_version}/ext/apache2/mod_passenger.so"
