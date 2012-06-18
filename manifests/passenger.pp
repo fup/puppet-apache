@@ -41,7 +41,7 @@ class apache::passenger($ruby_version='',$passenger_version) {
     exec {'passenger_install':
       command => "rvm exec ${rvm_path}/gems/${ruby_version}/bin/passenger-install-apache2-module -a",
       creates => "${rvm_path}/gems/${ruby_version}/gems/passenger-${passenger_version}/ext/apache2/mod_passenger.so",
-      require => Rvm::Define::Gem['passenger'],
+      require => [Package['curl-devel'], Package['httpd-devel'], Package['apr-devel'], Rvm::Define::Gem['passenger']],
     }
 
     $passenger_so   = "${rvm_path}/gems/${ruby_version}/gems/passenger-${passenger_version}/ext/apache2/mod_passenger.so"
