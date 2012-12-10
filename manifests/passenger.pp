@@ -14,9 +14,7 @@
 #
 # Sample Usage:
 #
-class apache::passenger($ruby_version='',$passenger_version) {
-  include apache::params
-  include ruby
+class apache::passenger($ruby_version='',$passenger_version) inherits apache::params {
 
   Exec {
     path    => '/usr/lib/rvm/bin:/bin:/sbin:/usr/bin:/usr/sbin',
@@ -24,6 +22,7 @@ class apache::passenger($ruby_version='',$passenger_version) {
 
   if $rvm != '' {
     #  create the mod_passenger.so for the version of ruby installed by rvm
+    include ruby
     include rvm
 
     $passenger_packages = ['curl-devel','httpd-devel','apr-devel','apr-util-devel']
@@ -49,6 +48,7 @@ class apache::passenger($ruby_version='',$passenger_version) {
     $passenger_root = "${rvm_path}/gems/${ruby_version}/gems/passenger-${passenger_version}/"
 
   } else {
+    include ruby
 
     @package { $apache::params::passenger_package:
       ensure => present,
