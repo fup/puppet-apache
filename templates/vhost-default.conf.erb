@@ -18,8 +18,8 @@ NameVirtualHost *:<%= port %>
     Order allow,deny
     allow from all
   </Directory>
-  ErrorLog /var/log/httpd/<%= name %>_error.log
+  ErrorLog /var/log/<%= scope.lookupvar('apache::params::apache_name') %>/<%= name %>_error.log
   LogLevel warn
-  CustomLog /var/log/httpd/<%= name %>_access.log combined
+  CustomLog /var/log/<%= scope.lookupvar('apache::params::apache_name') %>/<%= name %>_access.log combined
   ServerSignature On
 </VirtualHost>

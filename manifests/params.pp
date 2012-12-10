@@ -37,12 +37,15 @@ class apache::params {
                              'rubygem-passenger-native-libs']
     }
     'ubuntu', 'debian': {
+       $rvm_path = '/usr/lib/rvm'
        $apache_name = 'apache2'
        $php_package = 'libapache2-mod-php5'
        $ssl_package = 'apache-ssl'
        $apache_dev  = [ 'libaprutil1-dev', 'libapr1-dev', 'apache2-prefork-dev' ]
        $vhost = '/etc/apache2/conf.d/vhosts.conf'
        $vdir = '/etc/apache2/sites-enabled/'
+       $passenger_conf = "/etc/apache2/mods-available/passenger.conf"
+       $passenger_package = ['libapache2-mod-passenger','passenger-doc']
     }
     default: {
        $apache_name = 'apache2'
